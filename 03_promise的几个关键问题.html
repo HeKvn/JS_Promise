@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const p = new Promise((resolve,reject) => {
+            // resolve(1) //promise变为resolved成功状态，成功值为1
+            // reject(2) //promise变为rejected失败状态，失败的原因值2
+            // throw new Error('出错了') //抛出异常，promise变为rejected失败状态，reason为 抛出的error
+            throw 3 //抛出异常，promise变为rejected失败状态，reason为 抛出的3
+        })
+        p.then(
+            value => {},
+            reason => {console.log('reason',reason)}
+        )
+        //再搞一个回调函数，绑定了多个成功/失败的回调函数
+        p.then(
+            value => {},
+            reason => {console.log('reason2',reason)}
+        )
+
+        //打印：reason 3  reason2 3
+    </script>
+</body>
+</html>

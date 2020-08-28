@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        new Promise((resolve,reject)=>{
+            resolve(1) 
+            // reject(1)
+        }).then(
+            value => {
+                console.log('onResolved1()',value)
+                //如果想不让resolve(1)的情况下最终输出结果有undefined，让这个回调函数返回一个值
+                // return 2
+                // return Promise.resolve(3)
+                // return Promise.reject(4)
+                throw 5
+            },
+            reason => {
+                console.log('onRejected1()',reason)
+            }
+        ).then(
+            value =>{
+                console.log('onResolved2()',value)
+            },
+            reason =>{
+                console.log('onRejected2()',reason)
+            }
+        )
+        /*
+            resolve(1)情况下
+            将会输出：
+            onResolved1() 1 和 onResolved2() undefined
+
+            reject(1)情况下
+            将会输出：
+            onRejected1() 1 和 onResolved2() undefined
+
+            在resolve(1) 和 return2的情况下
+            将会输出：
+            onResolved1() 1 和 onResolved2() 2
+
+            在resolve(1) 和 return Promise.resolve(3)的情况下
+            将会输出：
+            onResolved1() 1 和 onResolved2() 3
+
+            在resolve(1) 和 return Promise.reject(4)的情况下
+            将会输出：
+            onResolved1() 1 和 onRejected2() 4
+
+            在resolve(1) 和 throw 5的情况下
+            将会输出：
+            onResolved1() 1 和 onRejected2() 5
+        */
+    </script>
+</body>
+</html>

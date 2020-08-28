@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    new Promise((resolve,reject) => {
+        setTimeout(() => {
+            // resolve('成功的数据')
+            reject('失败的数据')
+            //这里打开谁，就成功/失败
+        },1000)
+    }).then(
+        value => {
+            console.log('onResolved()1',value)
+        }
+    ).catch(
+        reason => {
+            console.log('onRejected()1',reason)
+        }
+    )
+
+    //产生一个成功值为1的promise对象
+    const p1 = new Promise((resolve,reject) => {
+        resolve(1)
+    })
+    const p2 = Promise.resolve(2) //原Promise把resolve给注释了，记得
+    const p3 = Promise.reject(3)
+    // p1.then(value => {console.log(value)})
+    // p2.then(value => {console.log(value)})
+    // p3.catch(reason => {console.log(reason)})
+
+    const pAll = Promise.all([p1,p2,p3])
+    pAll.then(
+        values => {
+            console.log('all onResolved()',values) //[1,2]数组，不过有3 不会打印这个
+        },
+        reason => {
+            console.log('all onRejected()',reason)
+            //all onRejected() 3
+        }
+    )
+
+    const pRace = Promise.race([p1,p2,p3])
+    pRace.then(
+        value => {
+            //比赛，谁先完成（到终点）谁就是最终结果
+            console.log('race onResolved()',value) //p1
+        },
+        reason => {
+            console.log('race onRejected()',reason)
+        }
+    )
+
+</script>
+</body>
+</html>

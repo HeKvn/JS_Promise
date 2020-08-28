@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        new Promise((resolve,reject)=>{
+            // resolve(1)
+            reject(1)
+            //此处 reject(1)会逐层传到最后面的catch，相当于在这之间写了三个 reason => {throw reason}  (默认)
+        }).then(
+            value => {
+                console.log('onResolved1():',value)
+                return 2
+            }
+        ).then(
+            value =>{
+                console.log('onResolved2():')
+                return 3
+            }
+        ).then(
+            value => {
+                console.log('onResolved3():',value)
+            },
+            //不写reason => {throw reason}还可以这样写
+            reason => Promise.reject(reason)
+        ).catch(reason => {
+            console.log('onRejected1()',reason)
+            // throw reason
+            // return Promise.reject(reason)
+            return new Promise(() => {}) //返回一个pendding的promise，中断后面的执行。不会再执行后面的回调函数
+        }).then(
+            value => {
+                console.log('onResolved4():',value)
+            },
+            reason => {
+                console.log('onRejected2()',reason)
+            }
+        )
+    </script>
+</body>
+</html>

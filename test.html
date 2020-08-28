@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function something(){
+        if(Date.now()%2===1){
+            console.log('当前时间奇数')
+        }else{ //抛出异常
+            throw new Error('当前时间偶数，无法处理')
+        }
+    }
+
+    //捕获异常
+    //抛出了异常就要去捕获异常
+    try {
+        something()
+    } catch (error) {
+        alert(error.message)
+    }
+
+</script>
+<body>
+    
+</body>
+</html>
