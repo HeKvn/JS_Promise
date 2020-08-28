@@ -5,3 +5,7 @@
 #### 手写Promise
 
 原型上的then太难理解了，写了一大堆注释...
+
+### 写了篇promise的博客，欢迎阅读
+
+[JavaScript中的Promise及手写Promise(长文预警)](https://hekvn.top/2020/08/28/Promise/)
