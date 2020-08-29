@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06_宏队列与微队列</title>
+</head>
+<body>
+    <script>
+        setTimeout(() => {
+            console.log('timeout callback1()')
+            Promise.resolve(3).then(
+            value => { //会立即放入微队列
+                console.log('Promise onResolved3()',value)
+            }
+        )
+        }, 0)  //到了时间就将回调函数塞进宏队列，这里立即放入
+
+        setTimeout(() => {
+            console.log('timeout callback2()')
+        }, 0)  //到了时间就将回调函数塞进宏队列，这里立即放入
+
+        Promise.resolve(1).then(
+            value => { //会立即放入微队列
+                console.log('Promise onResolved()',value)
+            }
+        )
+
+        Promise.resolve(2).then(
+            value => { //会立即放入微队列
+                console.log('Promise onResolved()',value)
+            }
+        )
+
+        /*
+        输出结果：
+        Promise onResolved() 1
+        Promise onResolved() 2
+        timeout callback1()
+        Promise onResolved3() 3
+        timeout callback2()
+        */
+    </script>
+</body>
+</html>

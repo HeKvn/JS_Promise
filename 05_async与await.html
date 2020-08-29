@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        async function fn1() {
+            // return 1
+            // throw 2
+            // return Promise.resolve(3)
+            return new Promise((resolve,reject) => {
+                setTimeout(() => {
+                    resolve(4)
+                }, 1000);
+            })
+        }
+
+        const result = fn1()
+        // console.log(result)
+        result.then(
+            value => {
+                console.log('onResolved',value)
+            },
+            reason => {
+                console.log('onRejected',reason)
+            }
+        )
+
+        function fn2() {
+            return new Promise((resolve,reject) => {
+                setTimeout(() => {
+                    // resolve(5)
+                    reject(8)
+                }, 1000);
+            })
+        }
+
+        function fn4() {
+            return 6
+        }
+
+        async function fn3() {
+            try { //await只能得到成功的结果，所以出现错误的结果时要用try catch捕获异常
+                // const value = await fn2() //得到的就是2，不写await的话还要value.then()才行
+                const value = await fn1() //4
+                console.log('value',value)
+            } catch (error) {
+                console.log('失败的结果',error) //error失败的原因值，就是8
+            }
+            // const value = await fn4() //6
+            // console.log('value',value)
+        }
+        fn3()
+    </script>
+</body>
+</html>
